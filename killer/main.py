@@ -3,7 +3,7 @@ import time
 
 while True:
 	sock = socket.socket()
-	HOST = "192.168.0.11"
+	HOST = "34.80.135.251"
 	PORT = 2233
 	sock.connect((HOST, PORT))
 	#发送模式

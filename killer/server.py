@@ -46,7 +46,7 @@ while True:
 			while True:
 				a = cli.recv(2048).decode()
 				cli2.sendall(a.encode())
-				time.sleep(1.5)
+				time.sleep(3)
 				b = cli2.recv(2048).decode()
 				cli.sendall(b.encode())
 
