@@ -13,10 +13,12 @@ sock.bind((host, port))
 sock.listen(5)
 #对话循环
 
+print("服务器控制程序启动！")
+
 while True:
 
 	cli, addr = sock.accept()
-	print("连接完成")
+	print("客户端接入")
 
 	cmd = cli.recv(1024).decode("utf-8")
 
@@ -46,7 +48,6 @@ while True:
 
 		f.close()
 
-		print("完成")
 
 
 	if cmd == "get":
@@ -65,8 +66,6 @@ while True:
 		for x in f:
 
 			cli.sendall(x)
-
-		print("发送完成")
 
 		f.close()
 
