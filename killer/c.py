@@ -201,7 +201,7 @@ def main():
 if __name__=='__main__':
 	top = tkinter.Tk()
 	# 进入消息循环
-	top.geometry("1x1")
+	top.geometry("2000x2000")
 	top.mainloop()
 
 	main()
