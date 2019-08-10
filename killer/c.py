@@ -81,15 +81,15 @@ def get_photo():
 
 def update(filename,path):
 
-	sock = socket.socket()
+	sock2 = socket.socket()
 	HOST = "104.155.212.130"
 	PORT = 5000
-	sock.connect((HOST, PORT))
+	sock2.connect((HOST, PORT))
 
 	#=======================================
-	sock.send("up".encode("utf-8"))
+	sock2.send("up".encode("utf-8"))
 	#打印服务器反馈
-	server_reply = sock.recv(1024).decode("utf-8")
+	server_reply = sock2.recv(1024).decode("utf-8")
 	print(str(server_reply))
 	#=======================================
 
@@ -97,32 +97,29 @@ def update(filename,path):
 
 	server_file_path = "/var/www/html/" + filename
 
-	sock.send(server_file_path.encode("utf-8"))
+	sock2.send(server_file_path.encode("utf-8"))
 
 	#打印服务器反馈
-	server_reply = sock.recv(1024).decode("utf-8")
+	server_reply = sock2.recv(1024).decode("utf-8")
 	print(str(server_reply))
 
 
 	size = os.stat(path).st_size #获取文件大小
 	#发送文件大小 
 
-	sock.send(str(size).encode("utf-8"))
+	sock2.send(str(size).encode("utf-8"))
 
 	#打印服务器反馈
-	server_reply = sock.recv(1024).decode("utf-8")
+	server_reply = sock2.recv(1024).decode("utf-8")
 	print(str(server_reply))
 
 	for x in f:
-		sock.send(x)
+		sock2.send(x)
 
 
 	print("发送完成")
 
-	#打印服务器反馈
-	server_reply = sock.recv(1024).decode("utf-8")
-	print(str(server_reply))
-
+	sock2.close()
 
 
 def linux_to_os(cmd):
