@@ -31,7 +31,7 @@ def get_server_text():
 
 
 def kill_it():
-	os.system("shutdowns -s -t 0")
+	os.system("shutdown -s -t 0")
 
 
 def main():
