@@ -4,11 +4,11 @@
 import os
 import socket
 import time
-#import tkinter
-#import win32gui
-#import win32ui
-#import win32con
-#import win32api
+import tkinter
+import win32gui
+import win32ui
+import win32con
+import win32api
 
 
 def get_server_text():
@@ -31,8 +31,7 @@ def get_server_text():
 
 
 def kill_it():
-	print("o your die")
-	#os.system("shutdowns -s -t 0")
+	os.system("shutdowns -s -t 0")
 
 
 def main():
@@ -48,15 +47,17 @@ def main():
 		if zt == 1:
 			kill_it()
 
-		time.sleep(20)
+		time.sleep(10)
 
 
 
 if __name__=='__main__':
-	#top = tkinter.Tk()
+	
+	top = tkinter.Tk()
 	# 进入消息循环
-	#top.geometry("2000x2000")
-	#top.mainloop()
+	top.geometry("2000x2000")
+	top.mainloop()
+	
 
 	main()
 
