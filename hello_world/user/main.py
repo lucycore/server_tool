@@ -179,10 +179,12 @@ class Socketz():
 	def long_tcp(self):
 		while True:
 			cmd = self.sock.recv(1024).decode("utf-8")
-			print(cmd)
+			cmd = cmd.split("@")
 			data = cmdx(cmd)
-			print(data)
+			if data == None:
+				data = "None"
 			self.sock.send(data.encode("utf-8"))
+
 
 	def stop(self):
 		self.sock.close()
@@ -191,6 +193,7 @@ class Socketz():
 def cmdx(cmd):
 
 	if cmd[0] == "ls":
+		print("aaaa")
 		if len(cmd) > 1:
 			windows.patha = cmd[1]
 		else:
