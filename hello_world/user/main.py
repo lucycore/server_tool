@@ -99,6 +99,7 @@ class WinControl():
 		patha = self.patha
 		pathb = self.pathb
 		shutil.move(patha,pathb)
+		return "None"
 
 
 	def ls(self):
@@ -111,6 +112,7 @@ class WinControl():
 		all_list = []
 		for root , dirs, files in os.walk(path,topdown=True):
 			a = dirs + files
+			a = 'thisisafengefu'.join(a)
 			return a
 
 
@@ -193,7 +195,6 @@ class Socketz():
 def cmdx(cmd):
 
 	if cmd[0] == "ls":
-		print("aaaa")
 		if len(cmd) > 1:
 			windows.patha = cmd[1]
 		else:
@@ -265,7 +266,7 @@ def main():
 			time.sleep(5)
 		if cmd == "start":
 			sockc.long_tcp()
-
+		
 
 
 
