@@ -86,3 +86,4 @@ while True:
 			cli2.sendall(cmd.encode())
 			re = cli2.recv(2048).decode()
 			cli.sendall(cmd.encode())
+			
