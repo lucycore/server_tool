@@ -10,7 +10,7 @@ def main():
 	sock.bind((host, port))
 	sock.listen(5)
 
-	print("攻击转发服务启动！")
+	print("攻击监听服务启动！")
 	user_list = {}
 
 	while True:
