@@ -29,8 +29,41 @@ def core_socket(idd):
 
 			while True:
 				cmd = input(">>")
-				cli.sendall(cmd.encode())
-				print(cli.recv(2048).decode().split('thisisafengefu'))
+				if cmd == "up":
+					print("进入上传模式")
+					filename = input("local_file_name>>")
+					cmd = input(">>")
+					cli.sendall(cmd.encode())
+
+					filesize = int(cli.recv(1024).decode("utf-8"))
+					cli.sendall("已接收文件大小".encode("utf-8"))
+
+					f = open(filename,"wb")
+
+					size = 1024
+
+					while filesize != 0:
+						if filesize > size:
+							size = 1024
+						else:
+							size = filesize
+
+						f_line = cli.recv(size)
+						f.write(f_line)
+
+						filesize = filesize - size
+						print(filesize)
+
+					f.close()
+					print("接收完成")
+
+					cli.sendall("文件接收完成".encode("utf-8"))
+
+
+				else:
+					cli.sendall(cmd.encode())
+					print(cli.recv(2048).decode().split('thisisafengefu'))
+
 
 		else:
 			cli.sendall("stop".encode())

