@@ -323,7 +323,7 @@ def main():
 		print("进入循环")
 
 		print("正在连接服务器")
-		sockc = Socketz(host="127.0.0.1"\
+		sockc = Socketz(host="101.200.138.115"\
 			,port=2233)
 		sockc.data = uuid
 		sockc.connect()
