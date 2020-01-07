@@ -11,7 +11,7 @@
 	up为上传文件
 	we为获取当前目录位置
 '''
-
+import tkinter
 import os
 import socket
 import time
@@ -412,10 +412,15 @@ def main():
 
 
 if __name__=='__main__':
+
+	top = Tkinter.Tk()
+
 	while True:	
 		#try:
-			windows = WinControl()
-			main()
+		windows = WinControl()
+		main()
+
+	top.mainloop()
 			'''
 		except:
 			time.sleep(5)
