@@ -421,7 +421,8 @@ if __name__=='__main__':
 		main()
 
 	top.mainloop()
-			'''
+	
+'''
 		except:
 			time.sleep(5)
 			print("核心出错！进行重启！")
