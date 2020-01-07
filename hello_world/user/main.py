@@ -136,24 +136,17 @@ class WinControl():
 
 
 	def zipin(self):
-		"""
-		压缩指定文件夹
-		:param dirpath: 目标文件夹路径
-		:param outFullName: 压缩文件保存路径+xxxx.zip
-		:return: 无
-		"""
-		dirpath = self.patha
-		outFullName = self.pathb
+		start_dir = self.patha  # 要压缩的文件夹路径
+		file_news = self.pathb  # 压缩后文件夹的名字包含zip
 
-		zip = zipfile.ZipFile(outFullName,"w",zipfile.ZIP_DEFLATED)
-		for path,dirnames,filenames in os.walk(dirpath):
-			# 去掉目标跟路径，只对目标文件夹下边的文件及文件夹进行压缩
-			fpath = path.replace(dirpath,'')
-
-			for filename in filenames:
-				zip.write(os.path.join(path,filename),os.path.join(fpath,filename))
-			zip.close()
-
+		z = zipfile.ZipFile(file_news, 'w', zipfile.ZIP_DEFLATED)
+		for dir_path, dir_names, file_names in os.walk(start_dir):
+			f_path = dir_path.replace(start_dir, '')  # 这一句很重要，不replace的话，就从根目录开始复制
+			f_path = f_path and f_path + os.sep or ''  # 实现当前文件夹以及包含的所有文件的压缩
+			for filename in file_names:
+				z.write(os.path.join(dir_path, filename), f_path + filename)
+		z.close()
+		
 		return "None"
 
 
