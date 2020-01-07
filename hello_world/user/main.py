@@ -277,6 +277,8 @@ class Socketz():
 				#打印服务器反馈
 				server_reply = self.sock.recv(1024).decode("utf-8")
 				print(str(server_reply))		
+
+				self.sock.send("back".encode("utf-8"))
 				
 			else:	
 				data = cmdx(cmd)

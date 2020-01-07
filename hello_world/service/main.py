@@ -59,6 +59,9 @@ def core_socket(idd):
 
 					cli.sendall("文件接收完成".encode("utf-8"))
 
+					message = cli.recv(1024).decode("utf-8")
+					print(message)
+
 
 				else:
 					cli.sendall(cmd.encode())
