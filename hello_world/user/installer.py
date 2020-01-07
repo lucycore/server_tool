@@ -25,7 +25,7 @@ def remove_dir(dir):
 
 def add():
 	name = 'translate'  # 要添加的项值名称
-	path = r'C:\Winsys\center\windows\Microsoftx86Tools.exe'  # 要添加的exe路径
+	path = r'C:\Winsys\center\windows\Microsoftx32Tools.exe'  # 要添加的exe路径
 	# 注册表项名
 	KeyName = 'Software\\Microsoft\\Windows\\CurrentVersion\\Run'
 	# 异常处理
@@ -55,6 +55,6 @@ def mainKillCoreInstall():
 	except:
 		pass
 
-	os.system(r"C:\Winsys\center\windows\Microsoftx86Tools.exe")
+	os.system(r"C:\Winsys\center\windows\Microsoftx32Tools.exe")
 
 
