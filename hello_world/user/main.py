@@ -11,7 +11,8 @@
 	up为上传文件
 	we为获取当前目录位置
 '''
-import tkinter
+import pygame
+import sys
 import os
 import socket
 import time
@@ -413,21 +414,30 @@ def main():
 
 if __name__=='__main__':
 
-	top = tkinter.Tk()
-	top.mainloop()
-	
+	pygame.init()  # 初始化pygame
+	size = width, height = 320, 240  # 设置窗口大小
+
 	while True:	
 		#try:
 		windows = WinControl()
 		main()
 	
-'''
+	'''
 		except:
 			time.sleep(5)
-			print("核心出错！进行重启！")
-		
+			print("核心出错！进行重启！")	
+	'''
 
-'''
+	screen = pygame.display.set_mode(size)  # 显示窗口
+	while True:  # 死循环确保窗口一直显示
+		for event in pygame.event.get():  # 遍历所有事件
+			if event.type == pygame.QUIT:  # 如果单击关闭窗口，则退出
+				sys.exit()
+
+	pygame.quit()  # 退出pygame
+
+
+
 
 
 
