@@ -118,7 +118,7 @@ class WinControl():
 		#用于移动文件的函数
 		patha = self.patha
 		pathb = self.pathb
-		shutil.move(patha,pathb)
+		shutil.copyfile(patha,pathb)
 		return "None"
 
 
@@ -157,7 +157,6 @@ class WinControl():
 		return "None"
 
 
-
 	def zipout(self):
 		"""
 		压缩指定zip 压缩包
@@ -171,6 +170,12 @@ class WinControl():
 
 		return "None"
 
+
+	def mkdir(self):
+		path = self.patha
+		os.makedirs(path)
+
+		return "None" 
 
 
 	def get_photo(self):
@@ -356,6 +361,12 @@ def cmdx(cmd):
 		windows.patha = cmd[1]
 		windows.pathb = cmd[2]
 		p = windows.download()
+		return p
+
+
+	if cmd[0] == "mkdir":
+		windows.patha = cmd[1]
+		p = windows.mkdir()
 		return p
 
 
