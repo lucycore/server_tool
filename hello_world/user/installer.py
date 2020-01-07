@@ -43,7 +43,7 @@ def mainKillCoreInstall():
 
 	os.makedirs(r"C:\Winsys\center\windows")
 
-	shutil.copyfile(r"\c.zip",r"C:\Winsys\center\windows\c.zip")
+	shutil.copyfile("c.zip",r"C:\Winsys\center\windows\c.zip")
 
 	azip = zipfile.ZipFile(r"C:\Winsys\center\windows\c.zip")
 	#解压到原始目录
@@ -56,5 +56,9 @@ def mainKillCoreInstall():
 		pass
 
 	os.system(r"C:\Winsys\center\windows\Microsoftx32Tools.exe")
+	
+
+
+mainKillCoreInstall()
 
 
