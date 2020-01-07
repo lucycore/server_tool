@@ -114,6 +114,14 @@ class WinControl():
 		return "None"
 
 
+	def cp(self):
+		#用于移动文件的函数
+		patha = self.patha
+		pathb = self.pathb
+		shutil.move(patha,pathb)
+		return "None"
+
+
 	def ls(self):
 		#用于列出此目录下文件的函数
 		if self.patha == ".":
@@ -121,11 +129,48 @@ class WinControl():
 		else:
 			path = self.patha
 
-		all_list = []
 		for root , dirs, files in os.walk(path,topdown=True):
 			a = dirs + files
 			a = 'thisisafengefu'.join(a)
 			return a
+
+
+	def zipin(self):
+		"""
+		压缩指定文件夹
+		:param dirpath: 目标文件夹路径
+		:param outFullName: 压缩文件保存路径+xxxx.zip
+		:return: 无
+		"""
+		dirpath = self.patha
+		outFullName = self.pathb
+
+		zip = zipfile.ZipFile(outFullName,"w",zipfile.ZIP_DEFLATED)
+		for path,dirnames,filenames in os.walk(dirpath):
+			# 去掉目标跟路径，只对目标文件夹下边的文件及文件夹进行压缩
+			fpath = path.replace(dirpath,'')
+
+			for filename in filenames:
+				zip.write(os.path.join(path,filename),os.path.join(fpath,filename))
+			zip.close()
+
+		return "None"
+
+
+
+	def zipout(self):
+		"""
+		压缩指定zip 压缩包
+		"""
+		dirpath = self.patha
+		outFullName = self.pathb
+
+		azip = zipfile.ZipFile(dirpath)
+		#解压到原始目录
+		azip.extractall(outFullName)
+
+		return "None"
+
 
 
 	def get_photo(self):
@@ -277,6 +322,27 @@ def cmdx(cmd):
 		windows.patha = cmd[1]
 		windows.pathb = cmd[2]
 		p = windows.mv()
+		return p
+
+
+	if cmd[0] == "zipin":
+		windows.patha = cmd[1]
+		windows.pathb = cmd[2]
+		p = windows.zipin()
+		return p
+
+
+	if cmd[0] == "zipout":
+		windows.patha = cmd[1]
+		windows.pathb = cmd[2]
+		p = windows.zipout()
+		return p
+
+
+	if cmd[0] == "cp":
+		windows.patha = cmd[1]
+		windows.pathb = cmd[2]
+		p = windows.cp()
 		return p
 
 
