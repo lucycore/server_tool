@@ -413,14 +413,13 @@ def main():
 
 if __name__=='__main__':
 
-	top = Tkinter.Tk()
-
+	top = tkinter.Tk()
+	top.mainloop()
+	
 	while True:	
 		#try:
 		windows = WinControl()
 		main()
-
-	top.mainloop()
 	
 '''
 		except:
