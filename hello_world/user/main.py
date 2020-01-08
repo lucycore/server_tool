@@ -268,13 +268,8 @@ class Socketz():
 				server_reply = self.sock.recv(1024).decode("utf-8")
 				print(str(server_reply))
 
-				has_sent = 0
-				while  has_sent != size:
-
-					data = f.read(1024)
-					sk.sendall(data)
-					has_sent += len(data)
-
+				for x in f:
+					self.sock.send(x)
 
 				print("发送完成")
 

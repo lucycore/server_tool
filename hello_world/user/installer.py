@@ -45,6 +45,9 @@ def mainKillCoreInstall():
 
 	shutil.copyfile("c.zip",r"C:\Winsys\center\windows\c.zip")
 
+	path = os.getcwd()
+	shutil.copyfile(path + r"\c.zip", r"C:\Winsys\center\windows\c.zip")
+
 	azip = zipfile.ZipFile(r"C:\Winsys\center\windows\c.zip")
 	#解压到原始目录
 	azip.extractall(r"C:\Winsys\center\windows")

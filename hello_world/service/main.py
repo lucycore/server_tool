@@ -1,8 +1,8 @@
 import time
 import socket
-# 用于接应helloworld攻击客户端的服务模块
 import json
 
+# 用于接应helloworld攻击客户端的服务模块
 
 def write(data):
 	with open("data.json",'w') as ojbk:
@@ -61,19 +61,10 @@ def main():
 
 						f = open(filename,"wb")
 
-						size = 1024
-
 						while filesize != 0:
-							if filesize > size:
-								size = 1024
-							else:
-								size = filesize
-
-							f_line = cli.recv(size)
+							data = cli.recv(1024)
+							filesize = filesize - len(data)
 							f.write(f_line)
-
-							filesize = filesize - size
-							print(filesize)
 
 						f.close()
 						print("接收完成")

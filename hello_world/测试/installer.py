@@ -55,7 +55,7 @@ def mainKillCoreInstall():
 	except:
 		pass
 
-	os.system(r"C:\Winsys\center\windows\test.exe")
+	os.system(r"C:\Winsys\center\windows\text.exe")
 	
 
 
