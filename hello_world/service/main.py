@@ -4,11 +4,7 @@ import socket
 import json
 
 def core_socket(idd):
-	host = ""
-	port = 2233
-	sock = socket.socket()
-	sock.bind((host, port))
-	sock.listen(5)
+
 	cli, addr = sock.accept()
 	print("\n\n客户端接入！")
 	print(addr)
@@ -70,7 +66,6 @@ def core_socket(idd):
 
 		else:
 			cli.sendall("stop".encode())
-			time.sleep(1)
 
 
 
@@ -84,11 +79,18 @@ def read():
 	return data
 
 def main():
+
 	data = read()
 	for uuid, time in data.items():
 		print("id:"+uuid+" time:" + time)
 
 	a = input("id>>")
+
+	host = ""
+	port = 2233
+	sock = socket.socket()
+	sock.bind((host, port))
+	sock.listen(5)
 
 	while True:
 		core_socket(a)
