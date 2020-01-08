@@ -70,6 +70,7 @@ def core_socket(idd):
 
 		else:
 			cli.sendall("stop".encode())
+			time.sleep(1)
 
 
 
