@@ -64,7 +64,7 @@ def main():
 						while filesize != 0:
 							data = cli.recv(1024)
 							filesize = filesize - len(data)
-							f.write(f_line)
+							f.write(data)
 
 						f.close()
 						print("接收完成")
